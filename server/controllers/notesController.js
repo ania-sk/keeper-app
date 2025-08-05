@@ -2,7 +2,7 @@ import pool from "../db.js";
 
 const getNotes = async (req, res) => {
   const result = await pool.query("SELECT * FROM notes");
-  res.jason(result.rows);
+  res.json(result.rows);
 };
 
 const createNote = async (req, res) => {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./components/Header";
 import CreateArea from "./components/CreateArea";
 import Note from "./components/Note";
@@ -6,6 +6,20 @@ import Footer from "./components/Footer";
 
 function App() {
   const [notes, setNotes] = useState([]);
+
+  async function fetchNotes() {
+    try {
+      const response = await fetch("http://localhost:3000/api/notes");
+      const data = await response.json();
+      setNotes(data);
+    } catch (error) {
+      console.error("Błąd pobierania notatek:", error);
+    }
+  }
+
+  useEffect(() => {
+    fetchNotes();
+  }, []);
 
   function addNote(newNote) {
     setNotes((prevNotes) => {
@@ -24,7 +38,7 @@ function App() {
   return (
     <div>
       <Header />
-      <CreateArea onAdd={addNote} />
+      <CreateArea refreshNotes={fetchNotes} />
       {notes.map((noteItem, index) => {
         return (
           <Note

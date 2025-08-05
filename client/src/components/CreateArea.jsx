@@ -22,13 +22,32 @@ function CreateArea(props) {
     });
   }
 
-  function submitNote(event) {
-    props.onAdd(note);
-    setNote({
-      title: "",
-      content: "",
-    });
+  async function submitNote(event) {
+    // props.onAdd(note);
+    // setNote({
+    //   title: "",
+    //   content: "",
+    // });
     event.preventDefault();
+    try {
+      const response = await fetch("http://localhost:3000/api/notes", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(note),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to save note");
+      }
+
+      props.refreshNotes();
+
+      setNote({ title: "", content: "" });
+    } catch (error) {
+      console.error("X Errror:", error.message);
+    }
   }
 
   function expand() {
