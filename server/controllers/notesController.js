@@ -1,4 +1,4 @@
-const pool = require("../db");
+import pool from "../db.js";
 
 const getNotes = async (req, res) => {
   const result = await pool.query("SELECT * FROM notes");
@@ -15,4 +15,4 @@ const createNote = async (req, res) => {
   res.status(201).json({ message: "Notes added" });
 };
 
-module.exports = { getNotes, createNote };
+export { getNotes, createNote };
