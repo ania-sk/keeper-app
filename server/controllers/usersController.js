@@ -22,7 +22,7 @@ export async function registerUser(req, res) {
       [email, passwordHash]
     );
 
-    res.ststus(201).json({ message: "Registration completed successfully" });
+    res.status(201).json({ message: "Registration completed successfully" });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Server error" });
