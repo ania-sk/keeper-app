@@ -1,5 +1,5 @@
 import { useState } from "react";
-import AuthForm from "./AuthForm.jsx";
+import AuthForm from "./AuthForm";
 
 function RegisterForm() {
   const [email, setEmail] = useState("");
