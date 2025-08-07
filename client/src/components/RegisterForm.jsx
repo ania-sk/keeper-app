@@ -16,6 +16,16 @@ function RegisterForm() {
 
     const data = await res.json();
     setMessage(data.message || data.error);
+
+    if (data.error) {
+      setMessage(data.error);
+      setPassword("");
+      return;
+    }
+
+    setMessage(data.message);
+    setEmail("");
+    setPassword("");
   };
 
   return (
