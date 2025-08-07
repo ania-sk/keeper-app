@@ -1,4 +1,5 @@
 import { useState } from "react";
+import AuthForm from "./AuthForm.jsx";
 
 function RegisterForm() {
   const [email, setEmail] = useState("");
@@ -31,23 +32,11 @@ function RegisterForm() {
   return (
     <form onSubmit={handleSubmit}>
       <h2>Registration</h2>
-      <label htmlFor="email">Email</label>
-      <input
-        type="email"
-        name="email"
-        placeholder="example@email.com"
-        value={email}
-        onChange={(event) => setEmail(event.target.value)}
-        required
-      />
-      <label htmlFor="password">Password</label>
-      <input
-        type="password"
-        name="password"
-        placeholder="password"
-        value={password}
-        onChange={(event) => setPassword(event.target.value)}
-        required
+      <AuthForm
+        email={email}
+        password={password}
+        setEmail={setEmail}
+        setPassword={setPassword}
       />
       <button type="submit">Register</button>
       <p>{message}</p>
