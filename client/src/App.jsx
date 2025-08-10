@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "./components/Header";
 import CreateArea from "./components/CreateArea";
 import Note from "./components/Note";
@@ -6,10 +7,26 @@ import Footer from "./components/Footer";
 
 function App() {
   const [notes, setNotes] = useState([]);
+  const navigate = useNavigate();
 
   async function fetchNotes() {
+    const accessToken = localStorage.getItem("accessToken");
+
+    if (!accessToken) {
+      navigate("/login");
+      return;
+    }
     try {
-      const response = await fetch("http://localhost:3000/api/notes");
+      const response = await fetch("http://localhost:3000/api/notes", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      if (response.status === 401) {
+        navigate("/login");
+        return;
+      }
       const data = await response.json();
       setNotes(data);
     } catch (error) {

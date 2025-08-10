@@ -26,7 +26,7 @@ function LoginForm() {
         return;
       }
 
-      localStorage.setItem("token", data.token);
+      localStorage.setItem("accessToken", data.accessToken);
       setMessage(data.message);
       setEmail("");
       setPassword("");
