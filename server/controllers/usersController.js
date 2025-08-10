@@ -2,6 +2,8 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import pool from "../db.js";
 
+const JWT_SECRET = process.env.JWT_SECRET;
+
 async function registerUser(req, res) {
   const { email, password } = req.body;
 
@@ -18,19 +20,29 @@ async function registerUser(req, res) {
     }
 
     const passwordHash = await bcrypt.hash(password, 10);
-    await pool.query(
-      "INSERT INTO users (email, password_hash) VALUES ($1, $2)",
+    const insertResult = await pool.query(
+      "INSERT INTO users (email, password_hash) VALUES ($1, $2) RETURNING id, email",
       [email, passwordHash]
     );
 
-    res.status(201).json({ message: "Registration completed successfully" });
+    const user = insertResult.rows[0];
+
+    const accessToken = jwt.sign(
+      { id: user.id, email: user.email },
+      JWT_SECRET,
+      {
+        expiresIn: "2h",
+      }
+    );
+
+    res
+      .status(201)
+      .json({ message: "Registration completed successfully", accessToken });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Server error" });
   }
 }
-
-const JWT_SECRET = process.env.JWT_SECRET;
 
 async function loginUser(req, res) {
   const { email, password } = req.body;
@@ -55,11 +67,15 @@ async function loginUser(req, res) {
       return res.status(401).json({ error: "Invalid email or password." });
     }
 
-    const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, {
-      expiresIn: "2h",
-    });
+    const accessToken = jwt.sign(
+      { id: user.id, email: user.email },
+      JWT_SECRET,
+      {
+        expiresIn: "2h",
+      }
+    );
 
-    return res.status(200).json({ message: "Login successful!", token });
+    return res.status(200).json({ message: "Login successful!", accessToken });
   } catch (err) {
     console.error("Login error:", err);
     return res.status(500).json({ error: "Server error during login." });
