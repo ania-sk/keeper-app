@@ -29,11 +29,13 @@ function CreateArea(props) {
     //   content: "",
     // });
     event.preventDefault();
+    const accessToken = localStorage.getItem("accessToken");
     try {
       const response = await fetch("http://localhost:3000/api/notes", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify(note),
       });

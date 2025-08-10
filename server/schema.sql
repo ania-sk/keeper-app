@@ -4,6 +4,7 @@ CREATE DATABASE keeperapp;
 
 CREATE TABLE notes (
   id SERIAL PRIMARY KEY,
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
   title TEXT,
   content TEXT,
   created_at TIMESTAMP DEFAULT NOW()

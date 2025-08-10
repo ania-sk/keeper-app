@@ -5,6 +5,6 @@ import verifyToken from "../middleware/verifyToken.js";
 const router = express.Router();
 
 router.get("/", verifyToken, getNotes);
-router.post("/", createNote);
+router.post("/", verifyToken, createNote);
 
 export default router;
