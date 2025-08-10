@@ -9,10 +9,10 @@ function LoginForm() {
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
-    event.preventDefaul();
+    event.preventDefault();
 
     try {
-      const res = await fetch("/api/login", {
+      const res = await fetch("http://localhost:3000/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
