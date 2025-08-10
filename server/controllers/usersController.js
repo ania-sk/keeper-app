@@ -43,13 +43,13 @@ async function loginUser(req, res) {
     const result = await pool.query("SELECT * FROM users WHERE email = $1", [
       email,
     ]);
-
+    const user = result.rows[0];
     if (result.rows.length === 0) {
+      console.log("User not found");
       return res.status(401).json({ error: "Invalid email or password." });
     }
 
-    const user = result.rows[0];
-    const match = await bcrypt.compare(password, user.password);
+    const match = await bcrypt.compare(password, user.password_hash);
 
     if (!match) {
       return res.status(401).json({ error: "Invalid email or password." });
