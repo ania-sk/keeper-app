@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { createNote } from "../api/notes";
 import AddIcon from "@mui/icons-material/Add";
 import { Fab } from "@mui/material";
 import { Zoom } from "@mui/material";
@@ -23,30 +24,10 @@ function CreateArea(props) {
   }
 
   async function submitNote(event) {
-    // props.onAdd(note);
-    // setNote({
-    //   title: "",
-    //   content: "",
-    // });
     event.preventDefault();
     const accessToken = localStorage.getItem("accessToken");
     try {
-      const response = await fetch("http://localhost:3000/api/notes", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-        body: JSON.stringify(note),
-      });
-      if (response.status === 401 || response.status === 403) {
-        navigate("/login");
-        return;
-      }
-
-      if (!response.ok) {
-        throw new Error("Failed to save note");
-      }
+      await createNote(note, accessToken);
 
       props.refreshNotes(accessToken);
 

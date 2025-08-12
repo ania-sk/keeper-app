@@ -8,6 +8,27 @@ async function fetchNotes(accessToken) {
   return res.json();
 }
 
+async function createNote(note, accessToken) {
+  const res = await fetch(BASE_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify(note),
+  });
+
+  if (res.status === 401 || res.status === 403) {
+    throw new Error("Unauthorized");
+  }
+
+  if (!res.ok) {
+    throw new Error("Failed to save note");
+  }
+
+  return res.json();
+}
+
 async function deleteNote(id, accessToken) {
   const res = await fetch(`${BASE_URL}/${id}`, {
     method: "DELETE",
@@ -28,4 +49,4 @@ async function updateNote(id, data, accessToken) {
   if (!res.ok) throw new Error("Update failed");
   return res.json();
 }
-export { fetchNotes, deleteNote, updateNote };
+export { fetchNotes, createNote, deleteNote, updateNote };
