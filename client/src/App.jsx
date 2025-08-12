@@ -2,105 +2,61 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "./components/Header";
 import CreateArea from "./components/CreateArea";
-import Note from "./components/Note";
+import NoteList from "./components/notes/NoteList";
 import Footer from "./components/Footer";
+import { fetchNotes, deleteNote, updateNote } from "./api/notes";
 
 function App() {
   const [notes, setNotes] = useState([]);
   const navigate = useNavigate();
 
-  async function fetchNotes() {
-    const accessToken = localStorage.getItem("accessToken");
-
-    if (!accessToken) {
-      navigate("/login");
-      return;
-    }
-    try {
-      const response = await fetch("http://localhost:3000/api/notes", {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-
-      if (response.status === 401 || response.status === 403) {
-        navigate("/login");
-        return;
-      }
-      const data = await response.json();
-      setNotes(data);
-    } catch (error) {
-      console.error("Błąd pobierania notatek:", error);
-    }
-  }
-
+  // Pobierz notatki po załadowaniu komponentu
   useEffect(() => {
-    fetchNotes();
+    loadNotes();
   }, []);
 
-  function addNote(newNote) {
-    setNotes((prevNotes) => {
-      return [...prevNotes, newNote];
-    });
-  }
-
-  async function deleteNote(id) {
+  async function loadNotes() {
     const accessToken = localStorage.getItem("accessToken");
 
     if (!accessToken) {
       navigate("/login");
       return;
     }
-
     try {
-      const response = await fetch(`http://localhost:3000/api/notes/${id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-
-      if (response.status === 401 || response.status === 403) {
-        navigate("/login");
-        return;
-      }
-
-      if (response.ok) {
-        setNotes((prevNotes) => {
-          return prevNotes.filter((noteItem) => {
-            return noteItem.id !== id;
-          });
-        });
-      } else {
-        console.error("Failed to delete note from server.");
-      }
-    } catch (error) {
-      console.error("Error deleting note:", error);
+      const data = await fetchNotes(accessToken);
+      setNotes(data);
+    } catch {
+      navigate("/login");
     }
   }
 
-  function updateNote(updatedNote) {
-    setNotes((prevNotes) =>
-      prevNotes.map((note) => (note.id === updatedNote.id ? updatedNote : note))
-    );
+  async function handleDelete(id) {
+    const accessToken = localStorage.getItem("accessToken");
+    try {
+      await deleteNote(id, accessToken);
+      setNotes((prev) => prev.filter((note) => note.id !== id));
+    } catch {
+      navigate("/login");
+    }
+  }
+
+  async function handleUpdate(updatedNote) {
+    const accessToken = localStorage.getItem("accessToken");
+    try {
+      await updateNote(updatedNote.id, updatedNote, accessToken);
+      setNotes((prev) =>
+        prev.map((note) => (note.id === updatedNote.id ? updatedNote : note))
+      );
+    } catch {
+      navigate("/login");
+    }
   }
 
   return (
     <div>
       <Header />
       <CreateArea refreshNotes={fetchNotes} />
-      {notes.map((noteItem) => {
-        return (
-          <Note
-            key={noteItem.id}
-            id={noteItem.id}
-            title={noteItem.title}
-            content={noteItem.content}
-            onDelete={deleteNote}
-            onUpdate={updateNote}
-          />
-        );
-      })}
+      <NoteList notes={notes} onDelete={handleDelete} onUpdate={handleUpdate} />
       <Footer />
     </div>
   );
