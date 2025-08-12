@@ -79,6 +79,12 @@ function App() {
     }
   }
 
+  function updateNote(updatedNote) {
+    setNotes((prevNotes) =>
+      prevNotes.map((note) => (note.id === updatedNote.id ? updatedNote : note))
+    );
+  }
+
   return (
     <div>
       <Header />
@@ -91,6 +97,7 @@ function App() {
             title={noteItem.title}
             content={noteItem.content}
             onDelete={deleteNote}
+            onUpdate={updateNote}
           />
         );
       })}
