@@ -23,7 +23,7 @@ function App() {
         },
       });
 
-      if (response.status === 401) {
+      if (response.status === 401 || response.status === 403) {
         navigate("/login");
         return;
       }
@@ -59,6 +59,11 @@ function App() {
           Authorization: `Bearer ${accessToken}`,
         },
       });
+
+      if (response.status === 401 || response.status === 403) {
+        navigate("/login");
+        return;
+      }
 
       if (response.ok) {
         setNotes((prevNotes) => {

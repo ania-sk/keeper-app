@@ -39,6 +39,10 @@ function CreateArea(props) {
         },
         body: JSON.stringify(note),
       });
+      if (response.status === 401 || response.status === 403) {
+        navigate("/login");
+        return;
+      }
 
       if (!response.ok) {
         throw new Error("Failed to save note");
