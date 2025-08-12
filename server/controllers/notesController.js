@@ -52,4 +52,26 @@ const deleteNote = async (req, res) => {
   }
 };
 
-export { getNotes, createNote, deleteNote };
+const editNote = async (req, res) => {
+  const userId = req.user.id;
+  const noteId = req.params.id;
+  const { title, content } = req.body;
+
+  try {
+    const result = await pool.query(
+      "UPDATE notes SET title = $1, content = $2 WHERE id = $3 AND user_id = $4 RETURNING *",
+      [title, content, noteId, userId]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: "Note not found" });
+    }
+
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error("Note update error:", error);
+    res.status(500).json({ error: "Failed to update note" });
+  }
+};
+
+export { getNotes, createNote, deleteNote, editNote };
