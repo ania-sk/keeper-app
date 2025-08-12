@@ -48,7 +48,7 @@ function CreateArea(props) {
         throw new Error("Failed to save note");
       }
 
-      props.refreshNotes();
+      props.refreshNotes(accessToken);
 
       setNote({ title: "", content: "" });
     } catch (error) {

@@ -55,7 +55,7 @@ function App() {
   return (
     <div>
       <Header />
-      <CreateArea refreshNotes={fetchNotes} />
+      <CreateArea refreshNotes={loadNotes} />
       <NoteList notes={notes} onDelete={handleDelete} onUpdate={handleUpdate} />
       <Footer />
     </div>
