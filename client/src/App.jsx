@@ -44,23 +44,45 @@ function App() {
     });
   }
 
-  function deleteNote(id) {
-    setNotes((prevNotes) => {
-      return prevNotes.filter((noteItem, index) => {
-        return index !== id;
+  async function deleteNote(id) {
+    const accessToken = localStorage.getItem("accessToken");
+
+    if (!accessToken) {
+      navigate("/login");
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:3000/api/notes/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
       });
-    });
+
+      if (response.ok) {
+        setNotes((prevNotes) => {
+          return prevNotes.filter((noteItem) => {
+            return noteItem.id !== id;
+          });
+        });
+      } else {
+        console.error("Failed to delete note from server.");
+      }
+    } catch (error) {
+      console.error("Error deleting note:", error);
+    }
   }
 
   return (
     <div>
       <Header />
       <CreateArea refreshNotes={fetchNotes} />
-      {notes.map((noteItem, index) => {
+      {notes.map((noteItem) => {
         return (
           <Note
-            key={index}
-            id={index}
+            key={noteItem.id}
+            id={noteItem.id}
             title={noteItem.title}
             content={noteItem.content}
             onDelete={deleteNote}

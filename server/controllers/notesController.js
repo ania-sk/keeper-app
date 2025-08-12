@@ -31,4 +31,25 @@ const createNote = async (req, res) => {
   }
 };
 
-export { getNotes, createNote };
+const deleteNote = async (req, res) => {
+  const userId = req.user.id;
+  const noteId = req.params.id;
+
+  try {
+    const result = await pool.query(
+      "DELETE FROM notes WHERE id=$1 AND user_id = $2",
+      [noteId, userId]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: "Note not found or unauthorized" });
+    }
+
+    res.status(200).json({ message: "Note deleted" });
+  } catch (error) {
+    console.error("Error deleting note:", error);
+    res.status(500).json({ error: "Failed to delete note" });
+  }
+};
+
+export { getNotes, createNote, deleteNote };
