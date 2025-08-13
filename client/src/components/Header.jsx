@@ -1,9 +1,13 @@
 import React from "react";
 import HighlightIcon from "@mui/icons-material/Highlight";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function Header() {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const hideLogoutButton =
+    location.pathname === "/login" || location.pathname === "/register";
 
   function handleLogout() {
     localStorage.removeItem("accessToken");
@@ -16,7 +20,7 @@ function Header() {
         <HighlightIcon />
         Keeper
       </h1>
-      <button onClick={handleLogout}>Logout</button>
+      {!hideLogoutButton && <button onClick={handleLogout}>Logout</button>}
     </header>
   );
 }
