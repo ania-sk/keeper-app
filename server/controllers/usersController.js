@@ -34,7 +34,7 @@ async function registerUser(req, res) {
         expiresIn: "2h",
       }
     );
-    console.log("Token wysyłany:", accessToken);
+
     res
       .status(201)
       .json({ message: "Registration completed successfully", accessToken });
