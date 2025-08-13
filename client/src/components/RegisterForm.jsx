@@ -1,5 +1,6 @@
 import { useState } from "react";
 import AuthForm from "./AuthForm";
+import { registerUser } from "../api/auth";
 
 function RegisterForm() {
   const [email, setEmail] = useState("");
@@ -8,27 +9,21 @@ function RegisterForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    try {
+      const data = await registerUser(email, password);
+      setMessage(data.message || data.error);
 
-    const res = await fetch("http://localhost:3000/api/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
+      if (data.error) {
+        setPassword("");
+        return;
+      }
 
-    const data = await res.json();
-    setMessage(data.message || data.error);
-
-    if (data.error) {
-      setMessage(data.error);
+      setEmail("");
       setPassword("");
-      return;
+    } catch (error) {
+      setMessage(error.message || "Something went wrong. Please try again.");
     }
-
-    setMessage(data.message);
-    setEmail("");
-    setPassword("");
   };
-
   return (
     <form onSubmit={handleSubmit}>
       <h2>Registration</h2>

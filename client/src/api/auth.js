@@ -15,4 +15,19 @@ async function loginUser(email, password) {
   return res.json();
 }
 
-export { loginUser };
+async function registerUser(email, password) {
+  const res = await fetch(`${BASE_URL}/register`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password }),
+  });
+
+  if (!res.ok) {
+    const errorText = await res.text();
+    throw new Error(errorText || "Registration failed");
+  }
+
+  return res.json();
+}
+
+export { loginUser, registerUser };
