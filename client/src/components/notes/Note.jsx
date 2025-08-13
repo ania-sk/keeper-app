@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { updateNote } from "../../api/notes";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close";
 import { useAuth } from "../../context/AuthContext";
 
 function Note({ note, onDelete, onUpdate }) {
@@ -42,8 +44,12 @@ function Note({ note, onDelete, onUpdate }) {
         value={editedContent}
         onChange={(e) => setEditedContent(e.target.value)}
       />
-      <button onClick={handleSave}>Zapisz</button>
-      <button onClick={() => setIsEditing(false)}>Anuluj</button>
+      <button onClick={handleSave}>
+        <CheckIcon className="edit-icon" />
+      </button>
+      <button onClick={() => setIsEditing(false)}>
+        <CloseIcon className="edit-icon" />
+      </button>
     </div>
   ) : (
     <div className="note">

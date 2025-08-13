@@ -81,6 +81,22 @@ footer p {
   height: 36px;
   cursor: pointer;
   outline: none;
+  border-radius: 2px;
+}
+/* NOTE EDIT */
+.note.edit {
+  border: #f5ba13 solid;
+}
+.note.edit input {
+  font-weight: 600;
+}
+.edit-icon {
+  font-size: 24px;
+}
+
+button:hover {
+  transform: scale(1.2);
+  transition: transform 0.2s ease;
 }
 
 form.create-note {
@@ -92,6 +108,9 @@ form.create-note {
   border-radius: 7px;
   box-shadow: 0 1px 5px rgb(138, 137, 137);
 }
+
+.note.edit input,
+.note.edit textarea,
 form.create-note input,
 form.create-note textarea {
   width: 100%;
