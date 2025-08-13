@@ -5,9 +5,10 @@ function AuthForm({
   setPassword,
   formType,
   formMessage,
+  onSubmit,
 }) {
   return (
-    <form className="auth-form">
+    <form className="auth-form" onSubmit={onSubmit}>
       <h2>{formType}</h2>
       <div className="auth-content">
         <div className="auth-box email">
