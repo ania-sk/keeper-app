@@ -1,3 +1,5 @@
+import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
+import KeyIcon from "@mui/icons-material/Key";
 function AuthForm({
   email,
   password,
@@ -22,6 +24,7 @@ function AuthForm({
             onChange={(event) => setEmail(event.target.value)}
             required
           />
+          <AlternateEmailIcon className="auth-icon" />
         </div>
         <div className="auth-box">
           <label htmlFor="password">Password</label>
@@ -34,6 +37,7 @@ function AuthForm({
             onChange={(event) => setPassword(event.target.value)}
             required
           />
+          <KeyIcon className="auth-icon" />
         </div>
       </div>
       <button className="auth-button" type="submit">
