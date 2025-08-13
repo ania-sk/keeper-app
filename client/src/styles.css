@@ -83,6 +83,10 @@ footer p {
   outline: none;
   border-radius: 2px;
 }
+
+.notes-box {
+  margin: 3rem;
+}
 /* NOTE EDIT */
 .note.edit {
   border: #f5ba13 solid;

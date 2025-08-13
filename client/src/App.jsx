@@ -53,7 +53,13 @@ function App() {
     <div>
       <Header />
       <CreateArea refreshNotes={loadNotes} />
-      <NoteList notes={notes} onDelete={handleDelete} onUpdate={handleUpdate} />
+      <div className="notes-box">
+        <NoteList
+          notes={notes}
+          onDelete={handleDelete}
+          onUpdate={handleUpdate}
+        />
+      </div>
       <Footer />
     </div>
   );
