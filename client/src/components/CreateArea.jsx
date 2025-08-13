@@ -3,6 +3,7 @@ import { createNote } from "../api/notes";
 import AddIcon from "@mui/icons-material/Add";
 import { Fab } from "@mui/material";
 import { Zoom } from "@mui/material";
+import { useAuth } from "../context/AuthContext";
 
 function CreateArea(props) {
   const [isExpanded, setExpanded] = useState(false);
@@ -25,7 +26,8 @@ function CreateArea(props) {
 
   async function submitNote(event) {
     event.preventDefault();
-    const accessToken = localStorage.getItem("accessToken");
+    const { accessToken } = useAuth();
+
     try {
       await createNote(note, accessToken);
 
