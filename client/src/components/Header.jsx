@@ -22,7 +22,11 @@ function Header() {
         <HighlightIcon />
         Keeper
       </h1>
-      {!hideLogoutButton && <button onClick={handleLogout}>Logout</button>}
+      {!hideLogoutButton && (
+        <button onClick={handleLogout} className="btn-loggout">
+          Logout
+        </button>
+      )}
     </header>
   );
 }
