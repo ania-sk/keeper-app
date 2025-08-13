@@ -5,6 +5,7 @@ import CreateArea from "./components/CreateArea";
 import NoteList from "./components/notes/NoteList";
 import Footer from "./components/Footer";
 import { fetchNotes, deleteNote, updateNote } from "./api/notes";
+import { useAuth } from "./context/AuthContext";
 
 function App() {
   const [notes, setNotes] = useState([]);
@@ -16,7 +17,9 @@ function App() {
   }, []);
 
   async function loadNotes() {
-    const accessToken = localStorage.getItem("accessToken");
+    const { accessToken } = useAuth();
+
+    console.log("Token w App:", accessToken);
 
     if (!accessToken) {
       navigate("/login");
@@ -31,7 +34,8 @@ function App() {
   }
 
   async function handleDelete(id) {
-    const accessToken = localStorage.getItem("accessToken");
+    const { accessToken } = useAuth();
+
     try {
       await deleteNote(id, accessToken);
       setNotes((prev) => prev.filter((note) => note.id !== id));
@@ -41,7 +45,8 @@ function App() {
   }
 
   async function handleUpdate(updatedNote) {
-    const accessToken = localStorage.getItem("accessToken");
+    const { accessToken } = useAuth();
+
     try {
       await updateNote(updatedNote.id, updatedNote, accessToken);
       setNotes((prev) =>
