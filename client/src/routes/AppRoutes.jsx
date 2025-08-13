@@ -4,19 +4,10 @@ import { useState, useEffect } from "react";
 import App from "../App";
 import LoginForm from "../components/LoginForm";
 import RegisterForm from "../components/RegisterForm";
+import { useAuth } from "../context/AuthContext";
 
 function AppRoutes() {
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    !!localStorage.getItem("accessToken")
-  );
-  useEffect(() => {
-    const checkAuth = () => {
-      setIsAuthenticated(!!localStorage.getItem("accessToken"));
-    };
-
-    window.addEventListener("storage", checkAuth);
-    return () => window.removeEventListener("storage", checkAuth);
-  }, []);
+  const { isAuthenticated } = useAuth();
 
   return (
     <Routes>
