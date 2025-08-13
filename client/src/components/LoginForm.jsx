@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Header from "./Header";
 import AuthForm from "./AuthForm";
+import Footer from "./Footer";
 import { loginUser } from "../api/auth";
 
 function LoginForm() {
@@ -32,17 +34,19 @@ function LoginForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Login</h2>
+    <div>
+      <Header />
       <AuthForm
         email={email}
         password={password}
         setEmail={setEmail}
         setPassword={setPassword}
+        formType="Login"
+        onSubmit={handleSubmit}
+        formMessage={message}
       />
-      <button type="submit">Login</button>
-      <p>{message}</p>
-    </form>
+      <Footer />
+    </div>
   );
 }
 
