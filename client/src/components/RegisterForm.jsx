@@ -1,5 +1,7 @@
 import { useState } from "react";
+import Header from "./Header";
 import AuthForm from "./AuthForm";
+import Footer from "./Footer";
 import { registerUser } from "../api/auth";
 
 function RegisterForm() {
@@ -25,17 +27,23 @@ function RegisterForm() {
     }
   };
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Registration</h2>
+    <div>
+      <Header />
       <AuthForm
         email={email}
         password={password}
         setEmail={setEmail}
         setPassword={setPassword}
+        formType="Register"
+        onSubmit={handleSubmit}
+        formMessage={message}
       />
-      <button type="submit">Register</button>
-      <p>{message}</p>
-    </form>
+      <div className="go-to-box">
+        <p>Do you have an account?</p>
+        <a href="/login">Login</a>
+      </div>
+      <Footer />
+    </div>
   );
 }
 
