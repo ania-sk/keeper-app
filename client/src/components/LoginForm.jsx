@@ -4,6 +4,7 @@ import Header from "./Header";
 import AuthForm from "./AuthForm";
 import Footer from "./Footer";
 import { loginUser } from "../api/auth";
+import { useAuth } from "../context/AuthContext";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
@@ -23,7 +24,9 @@ function LoginForm() {
         return;
       }
 
-      localStorage.setItem("accessToken", data.accessToken);
+      const { login } = useAuth();
+      login(data.accessToken);
+
       setMessage(data.message);
       setEmail("");
       setPassword("");
