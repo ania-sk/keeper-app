@@ -154,6 +154,10 @@ form.create-note button {
   border-radius: 10px 100px;
 }
 
+form h2 {
+  color: #282828;
+}
+
 .auth-content {
   display: flex;
   flex-direction: column;
