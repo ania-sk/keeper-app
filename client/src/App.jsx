@@ -10,17 +10,13 @@ import { useAuth } from "./context/AuthContext";
 function App() {
   const [notes, setNotes] = useState([]);
   const navigate = useNavigate();
-
+  const { accessToken } = useAuth();
   // Pobierz notatki po załadowaniu komponentu
   useEffect(() => {
     loadNotes();
   }, []);
 
   async function loadNotes() {
-    const { accessToken } = useAuth();
-
-    console.log("Token w App:", accessToken);
-
     if (!accessToken) {
       navigate("/login");
       return;
@@ -34,8 +30,6 @@ function App() {
   }
 
   async function handleDelete(id) {
-    const { accessToken } = useAuth();
-
     try {
       await deleteNote(id, accessToken);
       setNotes((prev) => prev.filter((note) => note.id !== id));
@@ -45,8 +39,6 @@ function App() {
   }
 
   async function handleUpdate(updatedNote) {
-    const { accessToken } = useAuth();
-
     try {
       await updateNote(updatedNote.id, updatedNote, accessToken);
       setNotes((prev) =>

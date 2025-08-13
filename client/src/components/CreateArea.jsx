@@ -7,7 +7,7 @@ import { useAuth } from "../context/AuthContext";
 
 function CreateArea(props) {
   const [isExpanded, setExpanded] = useState(false);
-
+  const { accessToken } = useAuth();
   const [note, setNote] = useState({
     title: "",
     content: "",
@@ -26,7 +26,6 @@ function CreateArea(props) {
 
   async function submitNote(event) {
     event.preventDefault();
-    const { accessToken } = useAuth();
 
     try {
       await createNote(note, accessToken);

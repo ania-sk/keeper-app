@@ -11,6 +11,7 @@ function LoginForm() {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -24,7 +25,6 @@ function LoginForm() {
         return;
       }
 
-      const { login } = useAuth();
       login(data.accessToken);
 
       setMessage(data.message);
