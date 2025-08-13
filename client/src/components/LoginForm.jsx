@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthForm from "./AuthForm";
+import { loginUser } from "../api/auth";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
@@ -12,13 +13,7 @@ function LoginForm() {
     event.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:3000/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await res.json();
+      const data = await loginUser(email, password);
 
       if (data.error) {
         setMessage(data.error);
