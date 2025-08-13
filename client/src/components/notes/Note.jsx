@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { updateNote } from "../../api/notes";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
 function Note({ note, onDelete, onUpdate }) {
   const { id, title, content } = note;
@@ -11,10 +11,9 @@ function Note({ note, onDelete, onUpdate }) {
   const [editedTitle, setEditedTitle] = useState(title ?? "");
   const [editedContent, setEditedContent] = useState(content ?? "");
   const navigate = useNavigate();
+  const { accessToken } = useAuth();
 
   async function handleSave() {
-    const { accessToken } = useAuth();
-
     if (!accessToken) return navigate("/login");
 
     try {
