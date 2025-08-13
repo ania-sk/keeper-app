@@ -39,7 +39,7 @@ function AuthForm({
       <button className="auth-button" type="submit">
         {formType}
       </button>
-      <p>{formMessage}</p>
+      <p className="auth-error">{formMessage}</p>
     </form>
   );
 }

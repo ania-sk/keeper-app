@@ -125,8 +125,8 @@ form.create-note button {
   width: 22vw;
   padding-top: 2rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-  margin: 4rem auto;
-  border-radius: 2px;
+  margin: 4rem auto 1rem auto;
+  border-radius: 10px 100px;
 }
 
 .auth-content {
@@ -167,4 +167,18 @@ form.create-note button {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   font-size: 1.1em;
+}
+
+.auth-error {
+  margin-bottom: 2rem;
+  color: #f51313;
+  font-weight: 600;
+}
+
+.go-to-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  font-size: 0.9rem;
 }

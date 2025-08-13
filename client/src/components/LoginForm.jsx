@@ -48,6 +48,11 @@ function LoginForm() {
         onSubmit={handleSubmit}
         formMessage={message}
       />
+      <div className="go-to-box">
+        <p>Don't have an account yet?</p>
+        <a href="/register">Register</a>
+      </div>
+
       <Footer />
     </div>
   );
