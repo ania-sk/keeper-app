@@ -5,6 +5,8 @@ function AuthForm({
   password,
   setEmail,
   setPassword,
+  confirmPassword,
+  setConfirmPassword,
   formType,
   formMessage,
   onSubmit,
@@ -39,6 +41,21 @@ function AuthForm({
           />
           <KeyIcon className="auth-icon" />
         </div>
+        {formType === "Register" && (
+          <div className="auth-box">
+            <label htmlFor="confirm-password">Confirm password</label>
+            <input
+              className="auth-input"
+              type="password"
+              name="confirm-password"
+              placeholder="password"
+              value={confirmPassword}
+              onChange={(event) => setConfirmPassword(event.target.value)}
+              required
+            />
+            <KeyIcon className="auth-icon" />
+          </div>
+        )}
       </div>
       <button className="auth-button" type="submit">
         {formType}

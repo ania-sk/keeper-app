@@ -166,7 +166,7 @@ form.create-note button {
   flex-direction: column;
   position: relative;
 }
-.auth-box.email {
+.auth-box {
   margin-bottom: 1rem;
 }
 .auth-box label {

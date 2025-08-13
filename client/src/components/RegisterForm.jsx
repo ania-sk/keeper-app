@@ -7,10 +7,12 @@ import { registerUser } from "../api/auth";
 function RegisterForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     try {
       const data = await registerUser(email, password);
       setMessage(data.message || data.error);
@@ -22,6 +24,7 @@ function RegisterForm() {
 
       setEmail("");
       setPassword("");
+      setConfirmPassword("");
     } catch (error) {
       setMessage(error.message || "Something went wrong. Please try again.");
     }
@@ -32,8 +35,10 @@ function RegisterForm() {
       <AuthForm
         email={email}
         password={password}
+        confirmPassword={confirmPassword}
         setEmail={setEmail}
         setPassword={setPassword}
+        setConfirmPassword={setConfirmPassword}
         formType="Register"
         onSubmit={handleSubmit}
         formMessage={message}
