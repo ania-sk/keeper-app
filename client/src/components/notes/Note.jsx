@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { updateNote } from "../../api/notes";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -14,6 +14,13 @@ function Note({ note, onDelete, onUpdate }) {
   const [editedContent, setEditedContent] = useState(content ?? "");
   const navigate = useNavigate();
   const { accessToken } = useAuth();
+  const titleInputRef = useRef(null);
+
+  useEffect(() => {
+    if (isEditing && titleInputRef.current) {
+      titleInputRef.current.focus();
+    }
+  }, [isEditing]);
 
   async function handleSave() {
     if (!accessToken) return navigate("/login");
@@ -39,6 +46,7 @@ function Note({ note, onDelete, onUpdate }) {
       <input
         value={editedTitle}
         onChange={(e) => setEditedTitle(e.target.value)}
+        ref={titleInputRef}
       />
       <textarea
         value={editedContent}
