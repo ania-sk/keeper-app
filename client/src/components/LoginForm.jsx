@@ -32,7 +32,7 @@ function LoginForm() {
       setPassword("");
       navigate("/");
     } catch (err) {
-      setMessage("Something went wrong. Please try again.");
+      setMessage(err.message || "Something went wrong. Please try again.");
     }
   };
 

@@ -8,8 +8,8 @@ async function loginUser(email, password) {
   });
 
   if (!res.ok) {
-    const errorText = await res.text();
-    throw new Error(errorText || "Login failed");
+    const errorData = await res.json();
+    throw new Error(errorData.error || "Login failed");
   }
 
   return res.json();
@@ -23,8 +23,8 @@ async function registerUser(email, password) {
   });
 
   if (!res.ok) {
-    const errorText = await res.text();
-    throw new Error(errorText || "Registration failed");
+    const errorData = await res.json();
+    throw new Error(errorData.error || "Registration failed");
   }
 
   return res.json();
