@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:3000/api/notes";
+const BASE_URL = "https://keeper-app-backend-xvq1.onrender.com/api/notes";
 
 async function fetchNotes(accessToken) {
   const res = await fetch(BASE_URL, {
