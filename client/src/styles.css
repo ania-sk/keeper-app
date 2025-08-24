@@ -3,12 +3,28 @@
   margin: 0;
   box-sizing: border-box;
 }
+
 html {
   font-family: "Montserrat", sans-serif;
 }
+
 body {
   background: #eee;
   background-image: url("https://www.transparenttextures.com/patterns/cubes.png");
+  height: 100%;
+  margin: 0;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 header {
@@ -19,6 +35,7 @@ header {
   margin: auto;
   padding: 16px 32px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+  width: 100%;
 }
 
 header h1 {
@@ -41,29 +58,37 @@ header h1 {
 }
 
 footer {
-  position: absolute;
   text-align: center;
-  bottom: 0;
   width: 100%;
   height: 2.5rem;
+  margin-top: 8%;
 }
 
 footer p {
   color: #ccc;
 }
+
+.notes-box {
+  flex: 1;
+  margin: 3rem;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  align-items: start;
+  gap: 2rem;
+}
+
 .note {
   background: #fff;
   border-radius: 7px;
   box-shadow: 0 2px 5px #ccc;
   padding: 10px;
-  width: 240px;
-  margin: 16px;
-  float: left;
 }
+
 .note h1 {
   font-size: 1.1em;
   margin-bottom: 6px;
 }
+
 .note p {
   font-size: 1.1em;
   margin-bottom: 10px;
@@ -84,9 +109,6 @@ footer p {
   border-radius: 2px;
 }
 
-.notes-box {
-  margin: 3rem;
-}
 /* NOTE EDIT */
 .note.edit {
   border: #f5ba13 solid;
@@ -118,12 +140,19 @@ form.create-note {
 form.create-note input,
 form.create-note textarea {
   width: 100%;
-  border: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 0.5px dashed #c3c3c3;
   padding: 4px;
   outline: none;
   font-size: 1.2em;
   font-family: inherit;
   resize: none;
+}
+.note.edit textarea,
+form.create-note textarea {
+  border-bottom: none;
 }
 
 form.create-note button {
@@ -219,4 +248,73 @@ form h2 {
   justify-content: center;
   gap: 1rem;
   font-size: 0.9rem;
+}
+
+/* responsive media query for mobile screens */
+@media (max-width: 1650px) {
+  .auth-form {
+    width: 30vw;
+  }
+
+  .auth-button,
+  .auth-input {
+    width: 23vw;
+  }
+
+  .notes-box {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.8rem;
+  }
+}
+
+@media (max-width: 1100px) {
+  .auth-form {
+    width: 40vw;
+  }
+  .auth-button,
+  .auth-input {
+    width: 33vw;
+  }
+
+  .notes-box {
+    margin: 3rem 2rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.6rem;
+  }
+}
+
+@media (max-width: 850px) {
+  .auth-form {
+    width: 50vw;
+  }
+
+  .auth-button,
+  .auth-input {
+    width: 43vw;
+  }
+
+  .notes-box {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.2rem;
+  }
+}
+
+@media (max-width: 520px) {
+  .auth-form {
+    width: 90vw;
+  }
+
+  .auth-button,
+  .auth-input {
+    width: 83vw;
+  }
+
+  .notes-box {
+    margin: 3rem 1rem;
+    grid-template-columns: 1fr;
+  }
+
+  form.create-note {
+    width: 90vw;
+  }
 }

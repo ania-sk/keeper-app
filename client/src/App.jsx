@@ -50,7 +50,7 @@ function App() {
   }
 
   return (
-    <div>
+    <div className="container">
       <Header />
       <CreateArea refreshNotes={loadNotes} />
       <div className="notes-box">
