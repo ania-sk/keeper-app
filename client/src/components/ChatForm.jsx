@@ -6,6 +6,7 @@ function ChatForm() {
     e.preventDefault();
     const userMessage = chatInputRef.current.value.trim();
     if (!userMessage) return;
+    chatInputRef.current.value = "";
 
     console.log(userMessage);
   };
