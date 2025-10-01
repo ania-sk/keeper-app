@@ -1,13 +1,24 @@
+import { useRef } from "react";
+
 function ChatForm() {
+  const chatInputRef = useRef();
+  const handleChatFormSubmit = (e) => {
+    e.preventDefault();
+    const userMessage = chatInputRef.current.value.trim();
+    if (!userMessage) return;
+
+    console.log(userMessage);
+  };
   return (
-    <form action="#" className="chat-form">
+    <form action="#" className="chat-form" onSubmit={handleChatFormSubmit}>
       <input
+        ref={chatInputRef}
         type="text"
         placeholder="Message..."
         className="message-input"
         required
       />
-      <button class="material-symbols-rounded">arrow_upward</button>
+      <button className="material-symbols-rounded">arrow_upward</button>
     </form>
   );
 }
