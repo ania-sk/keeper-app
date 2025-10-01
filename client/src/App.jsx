@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import CreateArea from "./components/CreateArea";
 import NoteList from "./components/notes/NoteList";
 import Footer from "./components/Footer";
+import Chatbot from "./components/Chatbot";
 import { fetchNotes, deleteNote, updateNote } from "./api/notes";
 import { useAuth } from "./context/AuthContext";
 
@@ -60,6 +61,7 @@ function App() {
           onUpdate={handleUpdate}
         />
       </div>
+      <Chatbot />
       <Footer />
     </div>
   );

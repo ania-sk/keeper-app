@@ -1,4 +1,5 @@
-const BASE_URL = "https://keeper-app-backend-xvq1.onrender.com/api";
+// const BASE_URL = "https://keeper-app-backend-xvq1.onrender.com/api";
+const BASE_URL = "http://localhost:1000/api";
 
 async function loginUser(email, password) {
   const res = await fetch(`${BASE_URL}/login`, {
