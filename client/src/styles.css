@@ -396,6 +396,8 @@ form h2 {
   margin-bottom: 82px;
   overflow-y: auto;
   padding: 25px 22px;
+  scrollbar-width: thin;
+  scrollbar-color: #f5ba13 transparent;
 }
 
 .chat-body .message {
