@@ -5,8 +5,29 @@ import ChatMessage from "./ChatMessage";
 function Chatbot() {
   const [chatHistory, setChatHistory] = useState([]);
 
-  const generateBotResponse = (history) => {
-    console.log(history);
+  const generateBotResponse = async (history) => {
+    //format chat history for API request
+    history = history.map(({ role, text }) => ({ role, parts: [{ text }] }));
+
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ contents: history }),
+    };
+
+    try {
+      //make the API call to get the bot's response
+      const response = await fetch(
+        import.meta.env.VITE_API_URL,
+        requestOptions
+      );
+      const data = await response.json();
+      if (!response.ok)
+        throw new Error(data.error.message || "Something went wrong!");
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
