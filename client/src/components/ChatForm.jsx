@@ -1,6 +1,6 @@
 import { useRef } from "react";
 
-function ChatForm({ setChatHistory }) {
+function ChatForm({ chatHistory, setChatHistory, generateBotResponse }) {
   const chatInputRef = useRef();
   const handleChatFormSubmit = (e) => {
     e.preventDefault();
@@ -14,15 +14,20 @@ function ChatForm({ setChatHistory }) {
       { role: "user", text: userMessage },
     ]);
 
-    //add a "Thinking..." message placeholder for the bot's response
-    setTimeout(
-      () =>
-        setChatHistory((history) => [
-          ...history,
-          { role: "model", text: "Thinking..." },
-        ]),
-      600
-    );
+    //delay 600ms before showing "Thinking..." and generating response
+    setTimeout(() => {
+      //add a "Thinking..." message placeholder for the bot's response
+      setChatHistory((history) => [
+        ...history,
+        { role: "model", text: "Thinking..." },
+      ]);
+
+      //call the function to generate the bot's response
+      generateBotResponse([
+        ...chatHistory,
+        { role: "user", text: userMessage },
+      ]);
+    }, 600);
   };
   return (
     <form action="#" className="chat-form" onSubmit={handleChatFormSubmit}>

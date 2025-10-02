@@ -4,6 +4,11 @@ import ChatForm from "./ChatForm";
 import ChatMessage from "./ChatMessage";
 function Chatbot() {
   const [chatHistory, setChatHistory] = useState([]);
+
+  const generateBotResponse = (history) => {
+    console.log(history);
+  };
+
   return (
     <div className="chat-container">
       <div className="chat-popup">
@@ -36,7 +41,11 @@ function Chatbot() {
 
         {/* chat footer */}
         <div className="chat-footer">
-          <ChatForm setChatHistory={setChatHistory} />
+          <ChatForm
+            chatHistory={chatHistory}
+            setChatHistory={setChatHistory}
+            generateBotResponse={generateBotResponse}
+          />
         </div>
       </div>
     </div>
