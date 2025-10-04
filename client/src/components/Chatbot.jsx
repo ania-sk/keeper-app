@@ -9,10 +9,11 @@ function Chatbot() {
   const chatBodyRef = useRef();
 
   const generateBotResponse = async (history) => {
-    const updateHistory = (text) => {
+    //helper function to update chat history
+    const updateHistory = (text, isError = false) => {
       setChatHistory((prev) => [
         ...prev.filter((msg) => msg.text !== "Thinking..."),
-        { role: "model", text },
+        { role: "model", text, isError },
       ]);
     };
 
@@ -42,7 +43,7 @@ function Chatbot() {
 
       updateHistory(apiResponseText);
     } catch (error) {
-      console.log(error);
+      updateHistory(error.message, true);
     }
   };
 
