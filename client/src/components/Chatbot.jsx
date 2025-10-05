@@ -2,9 +2,16 @@ import { useState, useRef, useEffect } from "react";
 import ChatbotIcon from "./ChatbotIcon";
 import ChatForm from "./ChatForm";
 import ChatMessage from "./ChatMessage";
+import { chatbotPrompt, chatbotFirstMessage } from "./chatbotConfig";
 
 function Chatbot() {
-  const [chatHistory, setChatHistory] = useState([]);
+  const [chatHistory, setChatHistory] = useState([
+    {
+      hideInChat: true,
+      role: "model",
+      text: chatbotPrompt,
+    },
+  ]);
   const [showChat, setShowChat] = useState(false);
   const chatBodyRef = useRef();
 
@@ -82,10 +89,7 @@ function Chatbot() {
         <div ref={chatBodyRef} className="chat-body">
           <div className="message bot-message">
             <ChatbotIcon />
-            <p className="message-text">
-              Haro, haro! <br />
-              Jakoś pomóc?
-            </p>
+            <p className="message-text">{chatbotFirstMessage}</p>
           </div>
 
           {/* render the chat history dynamically */}
