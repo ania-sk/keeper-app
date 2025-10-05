@@ -548,3 +548,10 @@ form h2 {
 .chat-form .message-input:valid ~ button {
   display: block;
 }
+
+/* chatbot inside note */
+.chat-note-btn svg {
+  fill: #f5ba13;
+  width: 36px;
+  padding-bottom: 15px;
+}

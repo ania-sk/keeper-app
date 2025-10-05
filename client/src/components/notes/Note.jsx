@@ -6,6 +6,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import { useAuth } from "../../context/AuthContext";
+import ChatbotIcon from "../ChatbotIcon";
 
 function Note({ note, onDelete, onUpdate }) {
   const { id, title, content } = note;
@@ -41,6 +42,8 @@ function Note({ note, onDelete, onUpdate }) {
     }
   }
 
+  function handleAskChatbot() {}
+
   return isEditing ? (
     <div className="note edit">
       <input
@@ -68,6 +71,9 @@ function Note({ note, onDelete, onUpdate }) {
       </button>
       <button onClick={() => setIsEditing(true)}>
         <EditIcon />
+      </button>
+      <button onClick={handleAskChatbot} className="chat-note-btn">
+        <ChatbotIcon />
       </button>
     </div>
   );
