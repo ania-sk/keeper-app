@@ -8,7 +8,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useAuth } from "../../context/AuthContext";
 import ChatbotIcon from "../ChatbotIcon";
 
-function Note({ note, onDelete, onUpdate }) {
+function Note({ note, onDelete, onUpdate, onAskChatbot }) {
   const { id, title, content } = note;
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(title ?? "");
@@ -42,7 +42,11 @@ function Note({ note, onDelete, onUpdate }) {
     }
   }
 
-  function handleAskChatbot() {}
+  function handleAskChatbot() {
+    if (!isEditing) {
+      onAskChatbot(title, content);
+    }
+  }
 
   return isEditing ? (
     <div className="note edit">

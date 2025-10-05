@@ -1,6 +1,6 @@
 import Note from "./Note";
 
-function NoteList({ notes, onDelete, onUpdate }) {
+function NoteList({ notes, onDelete, onUpdate, onAskChatbot }) {
   return (
     <>
       {notes.map((note) => (
@@ -9,6 +9,7 @@ function NoteList({ notes, onDelete, onUpdate }) {
           note={note}
           onDelete={onDelete}
           onUpdate={onUpdate}
+          onAskChatbot={onAskChatbot}
         />
       ))}
     </>

@@ -4,15 +4,14 @@ import ChatForm from "./ChatForm";
 import ChatMessage from "./ChatMessage";
 import { chatbotPrompt, chatbotFirstMessage } from "./chatbotConfig";
 
-function Chatbot() {
-  const [chatHistory, setChatHistory] = useState([
-    {
-      hideInChat: true,
-      role: "model",
-      text: chatbotPrompt,
-    },
-  ]);
-  const [showChat, setShowChat] = useState(false);
+function Chatbot({
+  showChat,
+  setShowChat,
+  chatHistory,
+  setChatHistory,
+  pendingBotResponse,
+  setPendingBotResponse,
+}) {
   const chatBodyRef = useRef();
 
   const generateBotResponse = async (history) => {
@@ -61,6 +60,20 @@ function Chatbot() {
       behavior: "smooth",
     });
   }, [chatHistory]);
+
+  useEffect(() => {
+    if (!pendingBotResponse) return;
+
+    const lastMessage = chatHistory[chatHistory.length - 1];
+    if (lastMessage?.role === "user") {
+      setChatHistory((prev) => [
+        ...prev,
+        { role: "model", text: "Thinking..." },
+      ]);
+      generateBotResponse(chatHistory);
+      setPendingBotResponse(false);
+    }
+  }, [chatHistory, pendingBotResponse]);
 
   return (
     <div className={`chat-container ${showChat ? "show-chat" : ""}`}>

@@ -7,11 +7,35 @@ import Footer from "./components/Footer";
 import Chatbot from "./components/Chatbot";
 import { fetchNotes, deleteNote, updateNote } from "./api/notes";
 import { useAuth } from "./context/AuthContext";
+import { chatbotPrompt } from "./components/chatbotConfig";
 
 function App() {
   const [notes, setNotes] = useState([]);
   const navigate = useNavigate();
   const { accessToken } = useAuth();
+  const [showChat, setShowChat] = useState(false);
+  const [chatHistory, setChatHistory] = useState([]);
+  const [pendingBotResponse, setPendingBotResponse] = useState(false);
+
+  function handleAskChatbot(title, content) {
+    const filledPrompt = chatbotPrompt
+      .replace("{{title}}", title || "no specific title")
+      .replace("{{content}}", content || "no specific content");
+    setChatHistory([
+      {
+        hideInChat: true,
+        role: "model",
+        text: filledPrompt,
+      },
+      {
+        role: "user",
+        text: `Title: ${title}\nDescription: ${content}`,
+      },
+    ]);
+    setPendingBotResponse(true);
+    setShowChat(true);
+  }
+
   // Pobierz notatki po załadowaniu komponentu
   useEffect(() => {
     loadNotes();
@@ -59,9 +83,18 @@ function App() {
           notes={notes}
           onDelete={handleDelete}
           onUpdate={handleUpdate}
+          onAskChatbot={handleAskChatbot}
         />
       </div>
-      <Chatbot />
+      <Chatbot
+        showChat={showChat}
+        setShowChat={setShowChat}
+        chatHistory={chatHistory}
+        setChatHistory={setChatHistory}
+        pendingBotResponse={pendingBotResponse}
+        setPendingBotResponse={setPendingBotResponse}
+      />
+
       <Footer />
     </div>
   );
