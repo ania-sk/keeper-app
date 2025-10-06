@@ -21,7 +21,8 @@ function App() {
     const filledPrompt = chatbotPrompt
       .replace("{{title}}", title || "no specific title")
       .replace("{{content}}", content || "no specific content");
-    setChatHistory([
+    setChatHistory((prev) => [
+      ...prev,
       {
         hideInChat: true,
         role: "model",
