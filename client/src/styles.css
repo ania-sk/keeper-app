@@ -44,6 +44,17 @@ header h1 {
   font-weight: 200;
 }
 
+.welcome-header-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.welcome-header-container p {
+  color: #fff;
+}
+
 .btn-loggout {
   background: #f5ba13;
   color: #fff;

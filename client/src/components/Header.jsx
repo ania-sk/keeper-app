@@ -7,6 +7,7 @@ function Header() {
   const navigate = useNavigate();
   const location = useLocation();
   const { logout } = useAuth();
+  const { userName } = useAuth();
 
   const hideLogoutButton =
     location.pathname === "/login" || location.pathname === "/register";
@@ -23,9 +24,14 @@ function Header() {
         Keeper
       </h1>
       {!hideLogoutButton && (
-        <button onClick={handleLogout} className="btn-loggout">
-          Logout
-        </button>
+        <div className="welcome-header-container">
+          <div>
+            <p>Welcome, {userName}!</p>
+          </div>
+          <button onClick={handleLogout} className="btn-loggout">
+            Logout
+          </button>
+        </div>
       )}
     </header>
   );

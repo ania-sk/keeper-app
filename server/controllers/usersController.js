@@ -5,7 +5,7 @@ import pool from "../db.js";
 const JWT_SECRET = process.env.JWT_SECRET;
 
 async function registerUser(req, res) {
-  console.log("REQ BODY:", req.body);
+  const { email, password, username } = req.body;
 
   if (!email || !password || !username) {
     return res.status(400).json({ error: "Incorrect data" });
@@ -28,7 +28,7 @@ async function registerUser(req, res) {
     const user = insertResult.rows[0];
 
     const accessToken = jwt.sign(
-      { id: user.id, email: user.email, user_name: username },
+      { id: user.id, email: user.email, user_name: user.user_name },
       JWT_SECRET,
       {
         expiresIn: "4h",
@@ -68,10 +68,10 @@ async function loginUser(req, res) {
     }
 
     const accessToken = jwt.sign(
-      { id: user.id, email: user.email },
+      { id: user.id, email: user.email, user_name: user.user_name },
       JWT_SECRET,
       {
-        expiresIn: "2h",
+        expiresIn: "4h",
       }
     );
 
