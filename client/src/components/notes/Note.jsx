@@ -7,6 +7,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import { useAuth } from "../../context/AuthContext";
 import ChatbotIcon from "../ChatbotIcon";
+import ConfirmModal from "../ConfirmModal";
 
 function Note({ note, onDelete, onUpdate, onAskChatbot }) {
   const { id, title, content } = note;
@@ -18,6 +19,7 @@ function Note({ note, onDelete, onUpdate, onAskChatbot }) {
   const titleInputRef = useRef(null);
   const noteRef = useRef(null);
   const [noteHeight, setNoteHeight] = useState(null);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   useEffect(() => {
     if (isEditing && titleInputRef.current) {
@@ -86,7 +88,7 @@ function Note({ note, onDelete, onUpdate, onAskChatbot }) {
     <div ref={noteRef} className="note">
       <h1>{title}</h1>
       <p>{content}</p>
-      <button onClick={() => onDelete(id)}>
+      <button onClick={() => setShowConfirmModal(true)}>
         <DeleteIcon />
       </button>
       <button onClick={handleEdit}>
@@ -95,6 +97,16 @@ function Note({ note, onDelete, onUpdate, onAskChatbot }) {
       <button onClick={handleAskChatbot} className="chat-note-btn">
         <ChatbotIcon />
       </button>
+      {showConfirmModal && (
+        <ConfirmModal
+          message="Do you want to delete the note?"
+          onConfirm={() => {
+            onDelete(id);
+            setShowConfirmModal(false);
+          }}
+          onCancel={() => setShowConfirmModal(false)}
+        />
+      )}
     </div>
   );
 }
