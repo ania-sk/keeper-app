@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import ArrowUpwardRoundedIcon from "@mui/icons-material/ArrowUpwardRounded";
 
 function ChatForm({ chatHistory, setChatHistory, generateBotResponse }) {
   const chatInputRef = useRef();
@@ -41,7 +42,9 @@ function ChatForm({ chatHistory, setChatHistory, generateBotResponse }) {
         className="message-input"
         required
       />
-      <button className="material-symbols-rounded">arrow_upward</button>
+      <button>
+        <ArrowUpwardRoundedIcon />
+      </button>
     </form>
   );
 }

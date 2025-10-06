@@ -1,8 +1,11 @@
-import { useState, useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
+import ChatBubbleRoundedIcon from "@mui/icons-material/ChatBubbleRounded";
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
 import ChatbotIcon from "./ChatbotIcon";
 import ChatForm from "./ChatForm";
 import ChatMessage from "./ChatMessage";
-import { chatbotPrompt, chatbotFirstMessage } from "./chatbotConfig";
+import { chatbotFirstMessage } from "./chatbotConfig";
 
 function Chatbot({
   showChat,
@@ -79,8 +82,8 @@ function Chatbot({
     <div className={`chat-container ${showChat ? "show-chat" : ""}`}>
       {/* toggling the showChat value on the button click */}
       <button onClick={() => setShowChat((prev) => !prev)} id="chatbot-toggler">
-        <span className="material-symbols-rounded">mode_comment</span>
-        <span className="material-symbols-rounded">close</span>
+        <ChatBubbleRoundedIcon className="toggler-icon" />
+        <CloseRoundedIcon className="toggler-icon" />
       </button>
 
       <div className="chat-popup">
@@ -90,11 +93,8 @@ function Chatbot({
             <ChatbotIcon />
             <h2 className="icon-text">Keeper Bot</h2>
           </div>
-          <button
-            onClick={() => setShowChat((prev) => !prev)}
-            className="material-symbols-outlined"
-          >
-            keyboard_arrow_down
+          <button onClick={() => setShowChat((prev) => !prev)}>
+            <KeyboardArrowDownRoundedIcon />
           </button>
         </div>
 

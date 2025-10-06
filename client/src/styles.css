@@ -285,7 +285,7 @@ form h2 {
   transition: all 0.2s ease;
 }
 
-#chatbot-toggler span {
+#chatbot-toggler .toggler-icon {
   position: absolute;
   color: #fff;
 }
@@ -294,12 +294,12 @@ form h2 {
   transform: rotate(90deg);
 }
 
-#chat-toggler span:last-child,
-.chat-container.show-chat #chatbot-toggler span:first-child {
+#chat-toggler .toggler-icon:last-child,
+.chat-container.show-chat #chatbot-toggler .toggler-icon:first-child {
   opacity: 0;
 }
 
-.chat-container.show-chat #chatbot-toggler span:last-child {
+.chat-container.show-chat #chatbot-toggler .toggler-icon:last-child {
   opacity: 1;
 }
 
@@ -488,13 +488,6 @@ form h2 {
 
 .chat-form .message-input:valid ~ button {
   display: block;
-}
-
-/* chatbot inside note */
-.chat-note-btn svg {
-  fill: #f5ba13;
-  width: 36px;
-  padding-bottom: 15px;
 }
 
 /* ----------------------- */
