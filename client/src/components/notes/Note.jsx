@@ -88,14 +88,17 @@ function Note({ note, onDelete, onUpdate, onAskChatbot }) {
     <div ref={noteRef} className="note">
       <h1>{title}</h1>
       <p>{content}</p>
-      <button onClick={() => setShowConfirmModal(true)}>
+      <button onClick={() => setShowConfirmModal(true)} className="tooltip-btn">
         <DeleteIcon />
+        <span className="tooltip-text">Delete note</span>
       </button>
-      <button onClick={handleEdit}>
+      <button onClick={handleEdit} className="tooltip-btn">
         <EditIcon />
+        <span className="tooltip-text">Edit note</span>
       </button>
-      <button onClick={handleAskChatbot} className="chat-note-btn">
+      <button onClick={handleAskChatbot} className="tooltip-btn ">
         <ChatbotIcon />
+        <span className="tooltip-text">Ask Keeper Bot</span>
       </button>
       {showConfirmModal && (
         <ConfirmModal

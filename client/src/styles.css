@@ -109,6 +109,34 @@ footer p {
   border-radius: 2px;
 }
 
+.tooltip-btn {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-text {
+  visibility: hidden;
+  background-color: #f5ba13;
+  color: #282828;
+  text-align: center;
+  font-size: 0.75em;
+  padding: 4px 8px;
+  border-radius: 4px;
+  position: absolute;
+  z-index: 10;
+  top: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.tooltip-btn:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
 /* NOTE EDIT */
 .note.edit {
   border: #f5ba13 solid;
