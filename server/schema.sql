@@ -13,5 +13,6 @@ CREATE TABLE notes (
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   email TEXT UNIQUE NOT NULL,
-  password_hash TEXT NOT NULL
+  password_hash TEXT NOT NULL,
+  user_name TEXT NOT NULL
 );

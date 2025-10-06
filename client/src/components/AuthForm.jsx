@@ -1,10 +1,13 @@
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import KeyIcon from "@mui/icons-material/Key";
+import SentimentSatisfiedAltRoundedIcon from "@mui/icons-material/SentimentSatisfiedAltRounded";
 function AuthForm({
   email,
+  username,
   password,
   setEmail,
   setPassword,
+  setUsername,
   confirmPassword,
   setConfirmPassword,
   formType,
@@ -28,6 +31,21 @@ function AuthForm({
           />
           <AlternateEmailIcon className="auth-icon" />
         </div>
+        {formType === "Register" && (
+          <div className="auth-box">
+            <label htmlFor="user-name">Username</label>
+            <input
+              className="auth-input"
+              type="text"
+              name="user-name"
+              placeholder="your name"
+              value={username}
+              onChange={(event) => setUsername(event.target.value)}
+              required
+            />
+            <SentimentSatisfiedAltRoundedIcon className="auth-icon" />
+          </div>
+        )}
         <div className="auth-box">
           <label htmlFor="password">Password</label>
           <input

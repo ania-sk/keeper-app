@@ -5,9 +5,9 @@ import pool from "../db.js";
 const JWT_SECRET = process.env.JWT_SECRET;
 
 async function registerUser(req, res) {
-  const { email, password } = req.body;
+  console.log("REQ BODY:", req.body);
 
-  if (!email || !password) {
+  if (!email || !password || !username) {
     return res.status(400).json({ error: "Incorrect data" });
   }
 
@@ -21,17 +21,17 @@ async function registerUser(req, res) {
 
     const passwordHash = await bcrypt.hash(password, 10);
     const insertResult = await pool.query(
-      "INSERT INTO users (email, password_hash) VALUES ($1, $2) RETURNING id, email",
-      [email, passwordHash]
+      "INSERT INTO users (email, password_hash, user_name) VALUES ($1, $2, $3) RETURNING id, email",
+      [email, passwordHash, username]
     );
 
     const user = insertResult.rows[0];
 
     const accessToken = jwt.sign(
-      { id: user.id, email: user.email },
+      { id: user.id, email: user.email, user_name: username },
       JWT_SECRET,
       {
-        expiresIn: "2h",
+        expiresIn: "4h",
       }
     );
 

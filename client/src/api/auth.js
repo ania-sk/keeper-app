@@ -16,11 +16,11 @@ async function loginUser(email, password) {
   return res.json();
 }
 
-async function registerUser(email, password) {
+async function registerUser(email, username, password) {
   const res = await fetch(`${BASE_URL}/register`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify({ email, username, password }),
   });
 
   if (!res.ok) {

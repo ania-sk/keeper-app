@@ -8,6 +8,7 @@ import { useAuth } from "../context/AuthContext";
 
 function RegisterForm() {
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -25,7 +26,7 @@ function RegisterForm() {
     }
 
     try {
-      const data = await registerUser(email, password);
+      const data = await registerUser(email, username, password);
 
       if (data.error) {
         setMessage(data.error);
@@ -42,6 +43,7 @@ function RegisterForm() {
       }
 
       setEmail("");
+      setUsername("");
       setPassword("");
       setConfirmPassword("");
     } catch (error) {
@@ -53,9 +55,11 @@ function RegisterForm() {
       <Header />
       <AuthForm
         email={email}
+        username={username}
         password={password}
         confirmPassword={confirmPassword}
         setEmail={setEmail}
+        setUsername={setUsername}
         setPassword={setPassword}
         setConfirmPassword={setConfirmPassword}
         formType="Register"
