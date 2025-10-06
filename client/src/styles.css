@@ -259,74 +259,6 @@ form h2 {
   font-size: 0.9rem;
 }
 
-/* responsive media query for mobile screens */
-@media (max-width: 1650px) {
-  .auth-form {
-    width: 30vw;
-  }
-
-  .auth-button,
-  .auth-input {
-    width: 23vw;
-  }
-
-  .notes-box {
-    grid-template-columns: repeat(5, 1fr);
-    gap: 1.8rem;
-  }
-}
-
-@media (max-width: 1100px) {
-  .auth-form {
-    width: 40vw;
-  }
-  .auth-button,
-  .auth-input {
-    width: 33vw;
-  }
-
-  .notes-box {
-    margin: 3rem 2rem;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.6rem;
-  }
-}
-
-@media (max-width: 850px) {
-  .auth-form {
-    width: 50vw;
-  }
-
-  .auth-button,
-  .auth-input {
-    width: 43vw;
-  }
-
-  .notes-box {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.2rem;
-  }
-}
-
-@media (max-width: 520px) {
-  .auth-form {
-    width: 90vw;
-  }
-
-  .auth-button,
-  .auth-input {
-    width: 83vw;
-  }
-
-  .notes-box {
-    margin: 3rem 1rem;
-    grid-template-columns: 1fr;
-  }
-
-  form.create-note {
-    width: 90vw;
-  }
-}
 /* -------------------------------*/
 /* --------CHATBOT ---------------*/
 /* -------------------------------*/
@@ -615,4 +547,94 @@ form h2 {
 
 .confirm-btn.danger:hover {
   background: #d32f2f;
+}
+/* ------------------------------------------ */
+/* responsive media query for mobile screens */
+/* ------------------------------------------ */
+@media (max-width: 1650px) {
+  .auth-form {
+    width: 30vw;
+  }
+
+  .auth-button,
+  .auth-input {
+    width: 23vw;
+  }
+
+  .notes-box {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.8rem;
+  }
+
+  .chat-popup {
+    width: 26vw;
+  }
+}
+
+@media (max-width: 1100px) {
+  .auth-form {
+    width: 40vw;
+  }
+  .auth-button,
+  .auth-input {
+    width: 33vw;
+  }
+
+  .notes-box {
+    margin: 3rem 2rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.6rem;
+  }
+
+  .chat-popup {
+    width: 40vw;
+  }
+}
+
+@media (max-width: 850px) {
+  .auth-form {
+    width: 50vw;
+  }
+
+  .auth-button,
+  .auth-input {
+    width: 43vw;
+  }
+
+  .notes-box {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.2rem;
+  }
+
+  .chat-popup {
+    width: 60vw;
+  }
+}
+
+@media (max-width: 520px) {
+  .auth-form {
+    width: 90vw;
+  }
+
+  .auth-button,
+  .auth-input {
+    width: 83vw;
+  }
+
+  .notes-box {
+    margin: 3rem 1rem;
+    grid-template-columns: 1fr;
+  }
+
+  form.create-note {
+    width: 90vw;
+  }
+
+  .chat-popup {
+    width: 80vw;
+  }
+
+  .chat-body {
+    height: 400px;
+  }
 }
