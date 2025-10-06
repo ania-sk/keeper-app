@@ -112,9 +112,16 @@ footer p {
 /* NOTE EDIT */
 .note.edit {
   border: #f5ba13 solid;
+  display: flex;
+  flex-direction: column;
+  min-height: 170px;
 }
 .note.edit input {
   font-weight: 600;
+}
+.note.edit textarea {
+  flex-grow: 1;
+  resize: vertical;
 }
 .edit-icon {
   font-size: 24px;
@@ -153,6 +160,8 @@ form.create-note textarea {
 .note.edit textarea,
 form.create-note textarea {
   border-bottom: none;
+  scrollbar-width: thin;
+  scrollbar-color: #f5ba13 transparent;
 }
 
 form.create-note button {

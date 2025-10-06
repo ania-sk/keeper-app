@@ -16,12 +16,22 @@ function Note({ note, onDelete, onUpdate, onAskChatbot }) {
   const navigate = useNavigate();
   const { accessToken } = useAuth();
   const titleInputRef = useRef(null);
+  const noteRef = useRef(null);
+  const [noteHeight, setNoteHeight] = useState(null);
 
   useEffect(() => {
     if (isEditing && titleInputRef.current) {
       titleInputRef.current.focus();
     }
   }, [isEditing]);
+
+  function handleEdit() {
+    if (noteRef.current) {
+      const { height } = noteRef.current.getBoundingClientRect();
+      setNoteHeight(height);
+    }
+    setIsEditing(true);
+  }
 
   async function handleSave() {
     if (!accessToken) return navigate("/login");
@@ -49,7 +59,11 @@ function Note({ note, onDelete, onUpdate, onAskChatbot }) {
   }
 
   return isEditing ? (
-    <div className="note edit">
+    <div
+      className="note edit"
+      ref={noteRef}
+      style={{ height: `${noteHeight}px` }}
+    >
       <input
         value={editedTitle}
         onChange={(e) => setEditedTitle(e.target.value)}
@@ -59,21 +73,23 @@ function Note({ note, onDelete, onUpdate, onAskChatbot }) {
         value={editedContent}
         onChange={(e) => setEditedContent(e.target.value)}
       />
-      <button onClick={handleSave}>
-        <CheckIcon className="edit-icon" />
-      </button>
-      <button onClick={() => setIsEditing(false)}>
-        <CloseIcon className="edit-icon" />
-      </button>
+      <div>
+        <button onClick={handleSave}>
+          <CheckIcon className="edit-icon" />
+        </button>
+        <button onClick={() => setIsEditing(false)}>
+          <CloseIcon className="edit-icon" />
+        </button>
+      </div>
     </div>
   ) : (
-    <div className="note">
+    <div ref={noteRef} className="note">
       <h1>{title}</h1>
       <p>{content}</p>
       <button onClick={() => onDelete(id)}>
         <DeleteIcon />
       </button>
-      <button onClick={() => setIsEditing(true)}>
+      <button onClick={handleEdit}>
         <EditIcon />
       </button>
       <button onClick={handleAskChatbot} className="chat-note-btn">
