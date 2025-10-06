@@ -63,8 +63,9 @@ function CreateArea(props) {
           rows={isExpanded ? 3 : 1}
         />
         <Zoom in={isExpanded}>
-          <Fab onClick={submitNote}>
+          <Fab onClick={submitNote} className="tooltip-btn">
             <AddIcon />
+            <span className="tooltip-text">Add new note</span>
           </Fab>
         </Zoom>
       </form>

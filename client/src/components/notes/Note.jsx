@@ -76,11 +76,13 @@ function Note({ note, onDelete, onUpdate, onAskChatbot }) {
         onChange={(e) => setEditedContent(e.target.value)}
       />
       <div>
-        <button onClick={handleSave}>
+        <button onClick={handleSave} className="tooltip-btn">
           <CheckIcon className="edit-icon" />
+          <span className="tooltip-text">Save note</span>
         </button>
-        <button onClick={() => setIsEditing(false)}>
+        <button onClick={() => setIsEditing(false)} className="tooltip-btn">
           <CloseIcon className="edit-icon" />
+          <span className="tooltip-text">Cancel</span>
         </button>
       </div>
     </div>
