@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { createNote } from "../api/notes";
 import AddIcon from "@mui/icons-material/Add";
 import { Fab } from "@mui/material";
@@ -12,6 +12,8 @@ function CreateArea(props) {
     title: "",
     content: "",
   });
+  const [error, setError] = useState("");
+  const formRef = useRef(null);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -27,12 +29,20 @@ function CreateArea(props) {
   async function submitNote(event) {
     event.preventDefault();
 
+    //do not add an empty note
+    if (!note.title.trim() && !note.content.trim()) {
+      setError("The note cannot be empty.");
+      return;
+    }
+
     try {
       await createNote(note, accessToken);
 
       props.refreshNotes(accessToken);
 
       setNote({ title: "", content: "" });
+      setExpanded(false);
+      setError("");
     } catch (error) {
       console.error("X Errror:", error.message);
     }
@@ -42,9 +52,29 @@ function CreateArea(props) {
     setExpanded(true);
   }
 
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (
+        formRef.current &&
+        !formRef.current.contains(event.target) &&
+        isExpanded &&
+        !note.title.trim() &&
+        !note.content.trim()
+      ) {
+        setExpanded(false);
+        setError("");
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isExpanded, note]);
+
   return (
     <div>
-      <form className="create-note">
+      <form className="create-note" ref={formRef}>
         {isExpanded && (
           <input
             name="title"
@@ -69,6 +99,7 @@ function CreateArea(props) {
           </Fab>
         </Zoom>
       </form>
+      {error && <p className="error-message">{error}</p>}
     </div>
   );
 }

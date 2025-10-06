@@ -206,6 +206,13 @@ form.create-note button {
   cursor: pointer;
   outline: none;
 }
+
+.error-message {
+  color: #d32f2f;
+  font-size: 0.9em;
+  margin-top: 8px;
+  text-align: center;
+}
 /* LOGIN/REGISTER FORMS */
 .auth-form {
   display: flex;
