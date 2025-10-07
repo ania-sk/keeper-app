@@ -573,6 +573,7 @@ form h2 {
   font-weight: bold;
   width: 110px;
   letter-spacing: 2px;
+  border-radius: 14px 4px;
 }
 
 .confirm-btn:hover {
