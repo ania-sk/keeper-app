@@ -5,7 +5,8 @@ import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownR
 import ChatbotIcon from "./ChatbotIcon";
 import ChatForm from "./ChatForm";
 import ChatMessage from "./ChatMessage";
-import { chatbotFirstMessage } from "./chatbotConfig";
+import { getChatbotFirstMessage } from "./chatbotConfig";
+import { useAuth } from "../context/AuthContext";
 
 function Chatbot({
   showChat,
@@ -16,6 +17,7 @@ function Chatbot({
   setPendingBotResponse,
 }) {
   const chatBodyRef = useRef();
+  const { userName } = useAuth();
 
   const generateBotResponse = async (history) => {
     //helper function to update chat history
@@ -102,7 +104,7 @@ function Chatbot({
         <div ref={chatBodyRef} className="chat-body">
           <div className="message bot-message">
             <ChatbotIcon />
-            <p className="message-text">{chatbotFirstMessage}</p>
+            <p className="message-text">{getChatbotFirstMessage(userName)}</p>
           </div>
 
           {/* render the chat history dynamically */}

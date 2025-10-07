@@ -7,18 +7,19 @@ import Footer from "./components/Footer";
 import Chatbot from "./components/Chatbot";
 import { fetchNotes, deleteNote, updateNote } from "./api/notes";
 import { useAuth } from "./context/AuthContext";
-import { chatbotPrompt } from "./components/chatbotConfig";
+import { getChatbotPrompt } from "./components/chatbotConfig";
 
 function App() {
   const [notes, setNotes] = useState([]);
   const navigate = useNavigate();
   const { accessToken } = useAuth();
+  const { userName } = useAuth();
   const [showChat, setShowChat] = useState(false);
   const [chatHistory, setChatHistory] = useState([]);
   const [pendingBotResponse, setPendingBotResponse] = useState(false);
 
   function handleAskChatbot(title, content) {
-    const filledPrompt = chatbotPrompt
+    const filledPrompt = getChatbotPrompt(userName)
       .replace("{{title}}", title || "no specific title")
       .replace("{{content}}", content || "no specific content");
     setChatHistory((prev) => [
