@@ -677,4 +677,8 @@ form h2 {
   .chat-body {
     height: 400px;
   }
+
+  .welcome-header-container p {
+    opacity: 0;
+  }
 }
