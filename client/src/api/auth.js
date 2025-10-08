@@ -1,5 +1,5 @@
-// const BASE_URL = "https://keeper-app-backend-xvq1.onrender.com/api";
-const BASE_URL = "http://localhost:1000/api";
+// const BASE_URL = "http://localhost:1000/api";
+const BASE_URL = import.meta.env.VITE_AUTH_URL;
 
 async function loginUser(email, password) {
   const res = await fetch(`${BASE_URL}/login`, {
