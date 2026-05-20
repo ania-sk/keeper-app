@@ -36,7 +36,7 @@ app.post("/api/gemini", async (req, res) => {
       model: "gemini-1.5-flash",
     });
 
-    const result = await model.generateContent(contents);
+    const result = await model.generateContent({ contents });
 
     const response = await result.response;
 
