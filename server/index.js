@@ -8,7 +8,10 @@ import usersRouter from "./routes/usersRouter.js";
 dotenv.config();
 
 const app = express();
-const ai = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const model = ai.getGenerativeModel({ model: "gemini-1.5-flash" });
+const result = await model.generateContent({ contents: contents });
+const response = await result.response;
+const text = response.text();
 
 app.use(cors());
 // app.use(
