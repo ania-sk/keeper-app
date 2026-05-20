@@ -1,7 +1,6 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { GoogleGenerativeAI } from "@google/generative-ai";
 
 import notesRoutes from "./routes/notesRoutes.js";
 import usersRouter from "./routes/usersRouter.js";
@@ -10,11 +9,7 @@ dotenv.config();
 
 const app = express();
 
-// inicjalizacja Gemini
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-
 app.use(cors());
-
 app.use(express.json());
 
 app.use("/api/notes", notesRoutes);
@@ -24,39 +19,67 @@ app.post("/api/gemini", async (req, res) => {
   try {
     const { contents } = req.body;
 
-    if (!contents) {
+    if (!contents || !Array.isArray(contents)) {
       return res.status(400).json({
-        error: {
-          message: "Brak historii czatu.",
-        },
+        error: { message: "Brak poprawnej historii czatu (contents)." },
       });
     }
 
-    const model = genAI.getGenerativeModel({
-      model: "gemini-2.0-flash",
+    const mappedMessages = contents.map((msg) => {
+      let role = msg.role;
+      if (role === "model") role = "assistant";
+      if (!role) role = "user";
+
+      const textContent = msg.parts?.[0]?.text || "";
+
+      return {
+        role: role,
+        content: textContent,
+      };
     });
 
-    const result = await model.generateContent({ contents });
+    const responseFromGroq = await fetch(
+      "https://api.groq.com/openai/v1/chat/completions",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
+        },
+        body: JSON.stringify({
+          model: "llama-3.1-8b-instant",
+          messages: mappedMessages,
+          temperature: 0.7,
+        }),
+      },
+    );
 
-    const response = await result.response;
+    const data = await responseFromGroq.json();
 
-    const text = response.text();
+    if (!responseFromGroq.ok) {
+      console.error("Błąd z API Groq:", data);
+      throw new Error(data.error?.message || "Błąd zewnętrznego API Groq");
+    }
+
+    const aiResponseText =
+      data.choices?.[0]?.message?.content || "Nie otrzymałem odpowiedzi.";
 
     res.json({
       candidates: [
         {
           content: {
-            parts: [{ text }],
+            parts: [{ text: aiResponseText }],
           },
         },
       ],
     });
   } catch (error) {
-    console.error("Błąd Gemini:", error);
-
+    console.error("Błąd serwera AI:", error);
     res.status(500).json({
       error: {
-        message: "Nie udało się wygenerować odpowiedzi.",
+        message:
+          error.message ||
+          "Wystąpił wewnętrzny błąd serwera podczas generowania odpowiedzi.",
       },
     });
   }
