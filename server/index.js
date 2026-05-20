@@ -2,24 +2,19 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+
 import notesRoutes from "./routes/notesRoutes.js";
 import usersRouter from "./routes/usersRouter.js";
 
 dotenv.config();
 
 const app = express();
-const model = ai.getGenerativeModel({ model: "gemini-1.5-flash" });
-const result = await model.generateContent({ contents: contents });
-const response = await result.response;
-const text = response.text();
+
+// inicjalizacja Gemini
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 app.use(cors());
-// app.use(
-//   cors({
-//     origin: "https://keeper-app-frontend-m2n9.onrender.com",
-//     credentials: true,
-//   })
-// );
+
 app.use(express.json());
 
 app.use("/api/notes", notesRoutes);
@@ -30,33 +25,43 @@ app.post("/api/gemini", async (req, res) => {
     const { contents } = req.body;
 
     if (!contents) {
-      return res
-        .status(400)
-        .json({ error: { message: "Brak historii czatu." } });
+      return res.status(400).json({
+        error: {
+          message: "Brak historii czatu.",
+        },
+      });
     }
 
-    const response = await ai.models.generateContent({
+    const model = genAI.getGenerativeModel({
       model: "gemini-1.5-flash",
-      contents: contents,
     });
+
+    const result = await model.generateContent(contents);
+
+    const response = await result.response;
+
+    const text = response.text();
 
     res.json({
       candidates: [
         {
           content: {
-            parts: [{ text: response.text }],
+            parts: [{ text }],
           },
         },
       ],
     });
   } catch (error) {
-    console.error("Błąd bota Gemini na backendzie:", error);
+    console.error("Błąd Gemini:", error);
+
     res.status(500).json({
-      error: { message: "Nie udało się wygenerować odpowiedzi bota." },
+      error: {
+        message: "Nie udało się wygenerować odpowiedzi.",
+      },
     });
   }
 });
 
-app.listen(process.env.PORT || 4000, "0.0.0.0", () => {
-  console.log(`server is running on port ${process.env.PORT}`);
+app.listen(process.env.PORT || 5050, "0.0.0.0", () => {
+  console.log(`Server running on port ${process.env.PORT || 5050}`);
 });
