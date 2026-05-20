@@ -1,14 +1,14 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { GoogleGenAI } from "@google/generative-ai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import notesRoutes from "./routes/notesRoutes.js";
 import usersRouter from "./routes/usersRouter.js";
 
 dotenv.config();
 
 const app = express();
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+const ai = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 app.use(cors());
 // app.use(
@@ -48,11 +48,9 @@ app.post("/api/gemini", async (req, res) => {
     });
   } catch (error) {
     console.error("Błąd bota Gemini na backendzie:", error);
-    res
-      .status(500)
-      .json({
-        error: { message: "Nie udało się wygenerować odpowiedzi bota." },
-      });
+    res.status(500).json({
+      error: { message: "Nie udało się wygenerować odpowiedzi bota." },
+    });
   }
 });
 
