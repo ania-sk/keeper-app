@@ -1,29 +1,33 @@
 import { useRef } from "react";
 import ArrowUpwardRoundedIcon from "@mui/icons-material/ArrowUpwardRounded";
 
-function ChatForm({ chatHistory, setChatHistory, generateBotResponse }) {
+function ChatForm({
+  chatHistory,
+  setChatHistory,
+  generateBotResponse,
+  disabled,
+}) {
   const chatInputRef = useRef();
+
   const handleChatFormSubmit = (e) => {
     e.preventDefault();
+    if (disabled) return;
+
     const userMessage = chatInputRef.current.value.trim();
     if (!userMessage) return;
     chatInputRef.current.value = "";
 
-    // update chat history with the user's message
     setChatHistory((history) => [
       ...history,
       { role: "user", text: userMessage },
     ]);
 
-    //delay 600ms before showing "Thinking..." and generating response
     setTimeout(() => {
-      //add a "Thinking..." message placeholder for the bot's response
       setChatHistory((history) => [
         ...history,
         { role: "model", text: "Thinking..." },
       ]);
 
-      //call the function to generate the bot's response
       generateBotResponse([
         ...chatHistory,
         {
@@ -33,16 +37,20 @@ function ChatForm({ chatHistory, setChatHistory, generateBotResponse }) {
       ]);
     }, 600);
   };
+
   return (
     <form action="#" className="chat-form" onSubmit={handleChatFormSubmit}>
       <input
         ref={chatInputRef}
         type="text"
-        placeholder="Message..."
+        placeholder={
+          disabled ? "Accept the notice above to chat..." : "Message..."
+        }
         className="message-input"
         required
+        disabled={disabled}
       />
-      <button>
+      <button disabled={disabled}>
         <ArrowUpwardRoundedIcon />
       </button>
     </form>
