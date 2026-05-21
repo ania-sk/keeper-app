@@ -827,3 +827,77 @@ footer {
     width: 83vw;
   }
 }
+/* ------------------------------------------ */
+/* ------- Legal pages (PP / ToS) ----------- */
+/* ------------------------------------------ */
+
+.legal-page {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding: 3rem 1rem;
+}
+
+.legal-container {
+  background: #fff;
+  border-radius: 7px;
+  box-shadow: 0 2px 5px #ccc;
+  padding: 3rem;
+  max-width: 760px;
+  width: 100%;
+  line-height: 1.8;
+  color: #333;
+}
+
+.legal-container h1 {
+  font-size: 1.8rem;
+  color: #282828;
+  margin-bottom: 0.4rem;
+}
+
+.legal-container .legal-updated {
+  font-size: 0.85rem;
+  color: #999;
+  margin-bottom: 2rem;
+  display: block;
+}
+
+.legal-container h2 {
+  font-size: 1.1rem;
+  color: #282828;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+  padding-bottom: 4px;
+  border-bottom: 2px solid #f5ba1340;
+}
+
+.legal-container p,
+.legal-container li {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.legal-container ul {
+  padding-left: 1.4rem;
+  margin-top: 0.4rem;
+}
+
+.legal-container ul li {
+  margin-bottom: 0.3rem;
+}
+
+.legal-container a {
+  color: #f5ba13;
+  text-decoration: underline;
+}
+
+.legal-container a:hover {
+  color: #e2aa11;
+}
+
+.legal-placeholder {
+  color: #aaa;
+  font-style: italic;
+  text-align: center;
+  margin-top: 2rem;
+}
