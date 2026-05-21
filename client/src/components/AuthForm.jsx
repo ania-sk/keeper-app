@@ -1,6 +1,7 @@
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import KeyIcon from "@mui/icons-material/Key";
 import SentimentSatisfiedAltRoundedIcon from "@mui/icons-material/SentimentSatisfiedAltRounded";
+
 function AuthForm({
   email,
   username,
@@ -13,6 +14,8 @@ function AuthForm({
   formType,
   formMessage,
   onSubmit,
+  consentChecked,
+  setConsentChecked,
 }) {
   return (
     <form className="auth-form" onSubmit={onSubmit}>
@@ -74,7 +77,37 @@ function AuthForm({
             <KeyIcon className="auth-icon" />
           </div>
         )}
+
+        {formType === "Register" && (
+          <div className="auth-box consent-box">
+            <label className="consent-label">
+              <input
+                type="checkbox"
+                className="consent-checkbox"
+                checked={consentChecked}
+                onChange={(e) => setConsentChecked(e.target.checked)}
+              />
+              <span>
+                I have read and accept the{" "}
+                <a
+                  href="/privacy-policy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Privacy Policy
+                </a>{" "}
+                and{" "}
+                <a href="/terms" target="_blank" rel="noopener noreferrer">
+                  Terms of Service
+                </a>
+                . I understand that my data (email, notes, chat messages) will
+                be processed to provide the service, including by Groq AI.
+              </span>
+            </label>
+          </div>
+        )}
       </div>
+
       <button className="auth-button" type="submit">
         {formType}
       </button>
@@ -82,4 +115,5 @@ function AuthForm({
     </form>
   );
 }
+
 export default AuthForm;
