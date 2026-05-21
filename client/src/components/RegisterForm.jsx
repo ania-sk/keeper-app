@@ -12,11 +12,19 @@ function RegisterForm() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [consentChecked, setConsentChecked] = useState(false);
   const navigate = useNavigate();
   const { login } = useAuth();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (!consentChecked) {
+      setMessage(
+        "You must accept the Privacy Policy and Terms of Service to register.",
+      );
+      return;
+    }
 
     if (password !== confirmPassword) {
       setMessage("The passwords do not match.");
@@ -50,6 +58,7 @@ function RegisterForm() {
       setMessage(error.message || "Something went wrong. Please try again.");
     }
   };
+
   return (
     <div>
       <Header />
@@ -65,6 +74,8 @@ function RegisterForm() {
         formType="Register"
         onSubmit={handleSubmit}
         formMessage={message}
+        consentChecked={consentChecked}
+        setConsentChecked={setConsentChecked}
       />
       <div className="go-to-box">
         <p>Do you have an account?</p>
