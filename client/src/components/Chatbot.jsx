@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import ChatBubbleRoundedIcon from "@mui/icons-material/ChatBubbleRounded";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
@@ -7,6 +7,8 @@ import ChatForm from "./ChatForm";
 import ChatMessage from "./ChatMessage";
 import { getChatbotFirstMessage } from "./chatbotConfig";
 import { useAuth } from "../context/AuthContext";
+
+const GROQ_NOTICE_KEY = "groq_notice_accepted";
 
 function Chatbot({
   showChat,
@@ -18,9 +20,11 @@ function Chatbot({
 }) {
   const chatBodyRef = useRef();
   const { userName } = useAuth();
+  const [groqNoticeAccepted, setGroqNoticeAccepted] = useState(
+    () => localStorage.getItem(GROQ_NOTICE_KEY) === "true",
+  );
 
   const generateBotResponse = async (history) => {
-    //helper function to update chat history
     const updateHistory = (text, isError = false) => {
       setChatHistory((prev) => [
         ...prev.filter((msg) => msg.text !== "Thinking..."),
@@ -28,7 +32,6 @@ function Chatbot({
       ]);
     };
 
-    //format chat history for API request
     history = history.map(({ role, text }) => ({ role, parts: [{ text }] }));
 
     const requestOptions = {
@@ -38,16 +41,14 @@ function Chatbot({
     };
 
     try {
-      //make the API call to get the bot's response
       const response = await fetch(
         import.meta.env.VITE_API_URL,
-        requestOptions
+        requestOptions,
       );
       const data = await response.json();
       if (!response.ok)
         throw new Error(data.error.message || "Something went wrong!");
 
-      //clean and update chat history with bot's response
       const apiResponseText = data.candidates[0].content.parts[0].text
         .replace(/\*\*(.*?)\*\*/g, "$1")
         .trim();
@@ -60,7 +61,6 @@ function Chatbot({
 
   useEffect(() => {
     chatBodyRef.current.scrollTo({
-      //auto-scroll whenever chat history updates
       top: chatBodyRef.current.scrollHeight,
       behavior: "smooth",
     });
@@ -80,16 +80,19 @@ function Chatbot({
     }
   }, [chatHistory, pendingBotResponse]);
 
+  function handleAcceptGroqNotice() {
+    localStorage.setItem(GROQ_NOTICE_KEY, "true");
+    setGroqNoticeAccepted(true);
+  }
+
   return (
     <div className={`chat-container ${showChat ? "show-chat" : ""}`}>
-      {/* toggling the showChat value on the button click */}
       <button onClick={() => setShowChat((prev) => !prev)} id="chatbot-toggler">
         <ChatBubbleRoundedIcon className="toggler-icon" />
         <CloseRoundedIcon className="toggler-icon" />
       </button>
 
       <div className="chat-popup">
-        {/* chat header */}
         <div className="chat-header">
           <div className="chat-header-info">
             <ChatbotIcon />
@@ -100,25 +103,57 @@ function Chatbot({
           </button>
         </div>
 
-        {/* chat body */}
         <div ref={chatBodyRef} className="chat-body">
-          <div className="message bot-message">
-            <ChatbotIcon />
-            <p className="message-text">{getChatbotFirstMessage(userName)}</p>
-          </div>
+          {!groqNoticeAccepted ? (
+            <div className="groq-notice">
+              <div className="groq-notice-icon">🔒</div>
+              <p className="groq-notice-title">Before you start chatting</p>
+              <p className="groq-notice-text">
+                Keeper Bot is powered by <strong>Groq AI</strong>. Your messages
+                and note contents sent to the chatbot are processed by Groq's
+                servers, which may be located outside the EU (USA).
+              </p>
+              <p className="groq-notice-text">
+                By using the chatbot, you consent to this data transfer in
+                accordance with our{" "}
+                <a
+                  href="/privacy-policy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Privacy Policy
+                </a>
+                .
+              </p>
+              <button
+                className="groq-notice-btn"
+                onClick={handleAcceptGroqNotice}
+              >
+                I understand, continue
+              </button>
+            </div>
+          ) : (
+            <>
+              <div className="message bot-message">
+                <ChatbotIcon />
+                <p className="message-text">
+                  {getChatbotFirstMessage(userName)}
+                </p>
+              </div>
 
-          {/* render the chat history dynamically */}
-          {chatHistory.map((chat, index) => (
-            <ChatMessage key={index} chat={chat} />
-          ))}
+              {chatHistory.map((chat, index) => (
+                <ChatMessage key={index} chat={chat} />
+              ))}
+            </>
+          )}
         </div>
 
-        {/* chat footer */}
         <div className="chat-footer">
           <ChatForm
             chatHistory={chatHistory}
             setChatHistory={setChatHistory}
             generateBotResponse={generateBotResponse}
+            disabled={!groqNoticeAccepted}
           />
         </div>
       </div>
