@@ -38,10 +38,15 @@ header {
   width: 100%;
 }
 
+header a {
+  text-decoration: none;
+}
+
 header h1 {
   color: #fff;
   font-family: "McLaren", cursive;
   font-weight: 200;
+  text-decoration: none;
 }
 
 .welcome-header-container {

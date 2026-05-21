@@ -19,10 +19,12 @@ function Header() {
 
   return (
     <header>
+      <a href="/">
       <h1>
         <HighlightIcon />
         Keeper
       </h1>
+      </a>
       {!hideLogoutButton && (
         <div className="welcome-header-container">
           <button
