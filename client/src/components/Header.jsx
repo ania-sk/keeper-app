@@ -25,9 +25,13 @@ function Header() {
       </h1>
       {!hideLogoutButton && (
         <div className="welcome-header-container">
-          <div>
-            <p>Welcome, {userName}!</p>
-          </div>
+          <button
+            onClick={() => navigate("/account")}
+            className="btn-account"
+            title="Account settings"
+          >
+            {userName}
+          </button>
           <button onClick={handleLogout} className="btn-loggout">
             Logout
           </button>
