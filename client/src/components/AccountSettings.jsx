@@ -48,11 +48,7 @@ function AccountSettings() {
           <h1>Account Settings</h1>
           <span className="legal-updated">Logged in as: {userName}</span>
 
-          <h2>Your Data (GDPR)</h2>
-          <p>
-            Under the General Data Protection Regulation, you have the right to
-            access, export, and delete all personal data we store about you.
-          </p>
+          <h2>Your Data</h2>
 
           <div className="account-actions">
             {/* Art. 20 — Data portability */}
@@ -76,7 +72,8 @@ function AccountSettings() {
               <h3>🗑️ Delete account</h3>
               <p>
                 Permanently delete your account and all associated data,
-                including all your notes. <strong>This action cannot be undone.</strong>
+                including all your notes.{" "}
+                <strong>This action cannot be undone.</strong>
               </p>
               {!showDeleteConfirm ? (
                 <button
@@ -111,14 +108,6 @@ function AccountSettings() {
           </div>
 
           {message && <p className="account-message">{message}</p>}
-
-          <h2>Questions?</h2>
-          <p>
-            If you have any questions about your data, contact us at{" "}
-            <a href="mailto:as.tamashi@gmail.com">as.tamashi@gmail.com</a>.
-            See also our{" "}
-            <a href="/privacy-policy">Privacy Policy</a>.
-          </p>
         </div>
       </div>
       <Footer />

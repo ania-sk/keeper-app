@@ -5,6 +5,7 @@ import LoginForm from "../components/LoginForm";
 import RegisterForm from "../components/RegisterForm";
 import PrivacyPolicy from "../components/legal/PrivacyPolicy";
 import TermsOfService from "../components/legal/TermsOfService";
+import AccountSettings from "../components/AccountSettings";
 import { useAuth } from "../context/AuthContext";
 
 function AppRoutes() {
@@ -20,6 +21,12 @@ function AppRoutes() {
       <Route path="/register" element={<RegisterForm />} />
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       <Route path="/terms" element={<TermsOfService />} />
+      <Route
+        path="/account"
+        element={
+          isAuthenticated ? <AccountSettings /> : <Navigate to="/login" />
+        }
+      />
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );
